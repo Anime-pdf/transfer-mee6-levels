@@ -5,4 +5,4 @@
 #define PROJECT_VERSION "1.0.0"
 #endif
 
-#endif //TRANSFER_MEE6_LEVELS_VERSION_H
+#endif //VERSION_H

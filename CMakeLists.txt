@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12...3.27.4)
 
-file(STRINGS version.h VERSION_LINE
+file(STRINGS src/version.h VERSION_LINE
         LIMIT_COUNT 1
         REGEX "^#define PROJECT_VERSION "
 )
@@ -80,17 +80,6 @@ else()
     target_link_libraries(${PROJECT_NAME} dpp)
 endif()
 
-message(STATUS "******** ${CMAKE_PROJECT_NAME} ********")
-set(TARGET "Target OS: ${TARGET_OS} ${CMAKE_SYSTEM_PROCESSOR}")
-if(TARGET_OS STREQUAL "mac")
-    set(TARGET "${TARGET} (SDK: ${CMAKE_OSX_SYSROOT}, architectures: ${CMAKE_OSX_ARCHITECTURES})")
-endif()
-message(STATUS ${TARGET})
-message(STATUS "Version: ${PROJECT_VERSION}")
-message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
-message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
-
-message(STATUS "Dependencies:")
 function(show_dependency_status OUTPUT_NAME NAME)
     if(${NAME}_FOUND)
         if(${NAME}_BUNDLED)
@@ -103,4 +92,11 @@ function(show_dependency_status OUTPUT_NAME NAME)
     endif()
 endfunction()
 
+message(STATUS "******** ${CMAKE_PROJECT_NAME} ********")
+message(STATUS "Version: ${PROJECT_VERSION}")
+message(STATUS "Target OS: ${TARGET_OS} ${TARGET_BITS}-bit ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
+message(STATUS "Dependencies:")
 show_dependency_status("DPP" DPP)
